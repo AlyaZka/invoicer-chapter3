@@ -32,6 +32,9 @@ jobs:
             echo "CIRCLE_PROJECT_USERNAME=${CIRCLE_PROJECT_USERNAME}"
             echo "CIRCLE_PROJECT_REPONAME=${CIRCLE_PROJECT_REPONAME}"
             docker build -t ${DOCKER_REPO}/${CIRCLE_PROJECT_REPONAME} .;
+            docker login -u ${DOCKER_USER} -p ${DOCKER_PASS};
+            docker images --no-trunc | awk '/^app/ {print $3}' | sudo tee $CIRCLE_ARTIFACTS/docker-image-shasum256.txt;
+            docker push ${DOCKER_REPO}/${CIRCLE_PROJECT_REPONAME};
 
       - run:
           name: Run application in background
@@ -66,11 +69,6 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker login -u ${DOCKER_USER} -p ${DOCKER_PASS};
-              go install --ldflags '-extldflags "-static"' github.com/AlyaZka/invoicer-chapter3;
-              mkdir bin;
-              cp "$GOPATH_HEAD/bin/invoicer-chapter3" bin/invoicer;
-              docker build -t ${DOCKER_REPO}/invoicer-chapter3 .;
-              docker images --no-trunc | awk '/^app/ {print $3}' | sudo tee $CIRCLE_ARTIFACTS/docker-image-shasum256.txt;
-              docker push ${DOCKER_REPO}/invoicer-chapter3;
+              docker image ls --all;
             fi
             
