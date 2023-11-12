@@ -10,7 +10,7 @@ fail() {
     exit 1
 }
 
-export AWS_DEFAULT_REGION=${AWS_REGION:-us-east-1}
+export AWS_DEFAULT_REGION=${AWS_REGION:-us-north-1}
 
 datetag=$(date +%Y%m%d%H%M)
 identifier=$(whoami)-invoicer-$datetag
@@ -32,7 +32,7 @@ dbsg=$(jq -r '.GroupId' tmp/$identifier/dbsg.json)
 echo "DB security group is $dbsg"
 
 # Create the database
-dbinstclass="db.t2.micro"
+dbinstclass="db.t3.micro"
 dbstorage=5
 dbpass=$(dd if=/dev/urandom bs=128 count=1 2>/dev/null| tr -dc _A-Z-a-z-0-9)
 aws rds create-db-instance \
@@ -42,7 +42,7 @@ aws rds create-db-instance \
     --allocated-storage "$dbstorage" \
     --db-instance-class "$dbinstclass" \
     --engine postgres \
-    --engine-version 9.6.2 \
+    --engine-version 11.21 \
     --auto-minor-version-upgrade \
     --publicly-accessible \
     --master-username invoicer \
@@ -76,8 +76,7 @@ aws elasticbeanstalk create-application \
 echo "ElasticBeanTalk application created"
 
 # Get the name of the latest Docker solution stack
-dockerstack="$(aws elasticbeanstalk list-available-solution-stacks | \
-    jq -r '.SolutionStacks[]' | grep -P '.+Amazon Linux.+Docker.+' | head -1)"
+dockerstack="64bit Amazon Linux 2023 v4.1.0 running Docker"
 
 # Create the EB API environment
 sed "s/POSTGRESPASSREPLACEME/$dbpass/" ebs-options.json > tmp/$identifier/ebs-options.json || fail
