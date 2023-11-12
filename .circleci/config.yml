@@ -57,6 +57,7 @@ jobs:
 
       - run:
           name: Test dependencies are up to date
+          command: |
             echo "Test dependencies are up to date"
           #command: 'GOPATH="${GOPATH_HEAD}"; ( cd ${GOPATH_BASE}/${CIRCLE_PROJECT_REPONAME} && govend -u --prune && git diff --quiet )'
 
