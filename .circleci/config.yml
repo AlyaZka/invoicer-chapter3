@@ -36,7 +36,7 @@ jobs:
       - run:
           name: Run application in background
           command: |
-            docker run ${DOCKER_REPO}/${CIRCLE_PROJECT_REPONAME}
+            docker run --ip 172.17.0.2 ${DOCKER_REPO}/${CIRCLE_PROJECT_REPONAME} && \
             docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${DOCKER_REPO}/${CIRCLE_PROJECT_REPONAME}
           background: true
 
