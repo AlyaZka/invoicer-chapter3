@@ -25,4 +25,5 @@ jobs:
                 -t http://tolg-invoicer-202311131816-invoicer-api.eba-8ctdfapa.eu-north-1.elasticbeanstalk.com/ || \
             if [ $? -ne 1 ]; then exit 0; else exit 1; fi;
             )
+
             
