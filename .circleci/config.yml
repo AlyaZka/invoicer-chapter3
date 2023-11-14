@@ -40,7 +40,7 @@ jobs:
           background: true
 
       - run:
-          name: ZAP baseline test of application (tolgivcr202311081915)
+          name: ZAP baseline test of application tolgivcr202311081915
           # Only fail on error code 1, which indicates at least one FAIL was found.
           # error codes 2 & 3 indicate WARN or other, and should not break the run
           command: |
@@ -52,7 +52,7 @@ jobs:
             )
 
       - run:
-          name: ZAP baseline test of application (tolg-invoicer-202311131816)
+          name: ZAP baseline test of application tolg-invoicer-202311131816
           # Only fail on error code 1, which indicates at least one FAIL was found.
           # error codes 2 & 3 indicate WARN or other, and should not break the run
           command: |
