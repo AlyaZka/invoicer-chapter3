@@ -48,7 +48,7 @@ jobs:
             docker pull owasp/zap2docker-weekly && \
             docker run -t owasp/zap2docker-weekly zap-baseline.py \
                 -u https://raw.githubusercontent.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/master/zap-baseline.conf \
-                -t http://tolgivcr202311081915-invoicer-api.eba-6vppcvfd.eu-north-1.elasticbeanstalk.com/ || \
+                -t http://tolgivcr202311081915-invoicer-api.eba-6vppcvfd.eu-north-1.elasticbeanstalk.com/
             )
 
       - run:
@@ -60,7 +60,7 @@ jobs:
             docker pull owasp/zap2docker-weekly && \
             docker run -t owasp/zap2docker-weekly zap-baseline.py \
                 -u https://raw.githubusercontent.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/master/zap-baseline.conf \
-                -t http://tolg-invoicer-202311131816-invoicer-api.eba-8ctdfapa.eu-north-1.elasticbeanstalk.com/ || \
+                -t http://tolg-invoicer-202311131816-invoicer-api.eba-8ctdfapa.eu-north-1.elasticbeanstalk.com/
             )
 
       - run:
