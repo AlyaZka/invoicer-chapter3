@@ -47,7 +47,6 @@ jobs:
                 docker login -u ${DOCKER_USER} -p ${DOCKER_PASS};
                 echo ${DOCKER_USER}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG};
                 go install --ldflags '-extldflags "-static"' github.com/AlyaZka/invoicer-chapter3;
-                mkdir bin;
                 cp -r "$GOPATH_HEAD/bin/invoicer-chapter3" bin/invoicer;
                 docker build -t ${DOCKER_REPO}/invoicer-chapter3 .;
                 docker images --no-trunc | awk '/^app/ {print $3}' | sudo tee $CIRCLE_ARTIFACTS/docker-image-shasum256.txt;
